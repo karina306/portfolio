@@ -7,6 +7,17 @@
 		<style>
 			/* Always set the map height explicitly to define the size of the div
 			 * element that contains the map. */
+
+			div.map {
+				width: 70px;
+				height: 80px;
+				position: center;
+
+			}
+
+		
+
+
 			#map {
 				height: 100%;
 			}
@@ -40,7 +51,7 @@
 		<script>
 			function initMap() {
 				var map = new google.maps.Map(document.getElementById('map'), {
-					zoom: 20,
+					zoom: 12,
 					center: {lat: 38.611524, lng: -122.869521}
 				});
 				var geocoder = new google.maps.Geocoder();
