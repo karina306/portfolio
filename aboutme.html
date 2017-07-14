@@ -1,78 +1,74 @@
 <!DOCTYPE html>
 <html>
-<head>
-<style>
-div.container {
-    width: 100%;
-    border: 20px ;
-}
+	<head>
+		<title>Geocoding service</title>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+		<meta charset="utf-8">
+		<style>
+			/* Always set the map height explicitly to define the size of the div
+			 * element that contains the map. */
+			#map {
+				height: 100%;
+			}
+			/* Optional: Makes the sample page fill the window. */
+			html, body {
+				height: 100%;
+				margin: 0;
+				padding: 0;
+			}
+			#floating-panel {
+				position: absolute;
+				top: 10px;
+				left: 25%;
+				z-index: 5;
+				background-color: #fff;
+				padding: 5px;
+				border: 1px solid #999;
+				text-align: center;
+				font-family: 'Roboto','sans-serif';
+				line-height: 30px;
+				padding-left: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="floating-panel">
+			<input id="address" type="textbox" value="Sydney, NSW">
+			<input id="submit" type="button" value="Geocode">
+		</div>
+		<div id="map"></div>
+		<script>
+			function initMap() {
+				var map = new google.maps.Map(document.getElementById('map'), {
+					zoom: 8,
+					center: {lat: -34.397, lng: 150.644}
+				});
+				var geocoder = new google.maps.Geocoder();
 
-header, footer, article {
-    padding: 1em;
-    color: black;
-    background-color: white;
-    clear: left;
-    text-align: center; }
-    
-ul {
-    padding: 0em;
-    color: black;
-    background-color: white;
-    clear: left;
-    text-align: center;
+				document.getElementById('submit').addEventListener('click', function() {
+					geocodeAddress(geocoder, map);
+				});
+			}
 
-nav ul {
-    list-style-type: none;
-    padding: 5em;
-}
-   
-nav ul a {
-    text-decoration: none;
-}
-
-article {
-    margin-left: 170px;
-    border-left: 170px solid gray;
-    padding: 20em;
-    overflow: hidden;
-}
-</style>
-</head>
-<body>
-
-<div class="container">
-
-<header>
-   <h1>KARINA</h1>
-</header>
-  
-<header>
-  <ul>
-    <a href="#">x</Home></li>
-    <a href="#">About</a></li>
-   <a href="#">z</Categories></li>
-  </ul>
-</header>
-
-<article>
-	<h1>LED Lightshow</h1>
-  <a data-flickr-embed="true" data-context="true"  href="https://www.flickr.com/photos/151980882@N04/35321225102/in/dateposted-friend/" title="Untitled"><img src="https://c1.staticflickr.com/5/4212/35321225102_91ef2e1be2_z.jpg" width="640" height="480" alt="Untitled"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
-	<p>My team broke down the project into smaller tasks and we each worked on small parts of it on our own but we were completely independent, in fact, we discussed things a lot before proceeding and asked each other for advice. I think that our teamwork was exceptional. We were very efficient and completed everything we wanted to accomplish. The basic Arduino pieces of every arduino sketch are a breadboard, a power source, resistors lights and wires to complete the circuits. 
-</p>
-  <h1>Circuits</h1>
-	<a data-flickr-embed="true" data-context="true"  href="https://www.flickr.com/photos/151980882@N04/35556454885/in/dateposted-friend/" title="Untitled"><img src="https://c1.staticflickr.com/5/4283/35556454885_99424f9184_b.jpg" width="1024" height="768" alt="Untitled"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>  
-	<p>Today, my team and I made circuits wired in parallel and in series.</p>
-  <h1>A Title</h1>
-  <a data-flickr-embed="true" data-context="true"  href="https://www.flickr.com/photos/151980882@N04/35321225102/in/dateposted-friend/" title="Untitled"><img src="https://c1.staticflickr.com/5/4212/35321225102_91ef2e1be2_z.jpg" width="640" height="480" alt="Untitled"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
-
-  <p>SjhbdsamHsabdjASHBDKjsab,dhfgfjhgftygfhkjhgfhgnbmbjhbjnbhjgfffffffffcfftgyswdfghjklppppppppppppppppppppjjjjjjjjjjjjjjjjjjjjuuuuuuuuuuuhhhhhhhhhhhhhhhhhvvvvvvvvvvggg ftttttttt hbbbbbbb    .</p>
-</article>
-
-<footer></footer>
-
-</div>
-
-</body>
+			function geocodeAddress(geocoder, resultsMap) {
+				var address = document.getElementById('address').value;
+				geocoder.geocode({'address': address}, function(results, status) {
+					if (status === 'OK') {
+						resultsMap.setCenter(results[0].geometry.location);
+						var marker = new google.maps.Marker({
+							map: resultsMap,
+							position: results[0].geometry.location
+						});
+					} else {
+						alert('Geocode was not successful for the following reason: ' + status);
+					}
+				});
+			}
+		</script>
+		<script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkxu6lTiQu_m0apcS_wc0gtu6b3JMLcjA&callback=initMap">
+		</script>
+	</body>
 </html>
 
 
